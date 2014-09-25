@@ -4,6 +4,7 @@ import psycopg2
 
 from PostgresTagDao import PostgresTagDao
 from PostgresUserDao import PostgresUserDao
+from PostgresPostDao import PostgresPostDao
 
 
 class PostgresDaoFactory(object):
@@ -29,7 +30,7 @@ class PostgresDaoFactory(object):
         del self
 
     def getPostDao(self):
-        pass
+        return PostgresPostDao(self.conn, self.cur)
 
     def getUserDao(self):
         return PostgresUserDao(self.conn, self.cur)
