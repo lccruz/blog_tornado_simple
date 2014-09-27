@@ -12,8 +12,9 @@ class TestTag(unittest.TestCase):
     def setUp(self):
         self.dao_tag = FACTORY.getTagDao()
         self.dao_tag.delete_all()
-        self.dao_user = FACTORY.getUserDao()
         self.dao_post = FACTORY.getPostDao()
+        self.assertTrue(self.dao_post.delete_all())
+        self.dao_user = FACTORY.getUserDao()
 
     def test_convert_md5(self):
         password = convert_md5('teste')
@@ -56,6 +57,37 @@ class TestTag(unittest.TestCase):
         # delete all
         self.assertTrue(self.dao_tag.delete_all())
 
+    def test_insert_post(self):
+        # insert
+        post= Post('Post1', 'Conteudo')
+        new_post = self.dao_post.insert(post)
+        self.assertEqual(post.titulo, new_post.titulo)
+        self.assertEqual(post.conteudo, new_post.conteudo)
+        new_post = self.dao_post.insert('Post')
+        self.assertFalse(new_post)
+
+        # update
+        post.titulo = "Post Python"
+        post.conteudo = "Conteudo Python"
+        new_post = self.dao_post.update(post)
+        self.assertEqual(post.titulo, new_post.titulo)
+        self.assertEqual(post.conteudo, new_post.conteudo)
+
+        # get one
+        id = new_post.id
+        new_post = self.dao_post.get_um(id)
+        self.assertEqual(id, new_post.id)
+
+        new_post2 = self.dao_post.get_um(10000)
+        self.assertFalse(new_post2)
+
+        # delete um
+        self.assertTrue(self.dao_post.delete_um(new_post.id))
+
+        # delete all
+        self.assertTrue(self.dao_post.delete_all())
+
+
     def test_insert_user(self):
         user = User(
             "Luciano",
@@ -69,16 +101,6 @@ class TestTag(unittest.TestCase):
         new_user = self.dao_user.insert('Luciano')
         self.assertFalse(new_user)
         self.assertTrue(self.dao_user.delete_all())
-
-    def test_insert_post(self):
-        post= Post('Post1', 'Conteudo')
-        new_post = self.dao_post.insert(post)
-        self.assertEqual(post.titulo, new_post.titulo)
-        self.assertEqual(post.conteudo, new_post.conteudo)
-        new_post = self.dao_post.insert('Post')
-        self.assertFalse(new_post)
-        self.assertTrue(self.dao_post.delete_all())
-
 
 if __name__ == '__main__':
     unittest.main()

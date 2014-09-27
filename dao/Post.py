@@ -7,8 +7,11 @@ class Post(object):
     """
        Classe Post
     """
-    def __init__(self, titulo, conteudo, id=0):
+    def __init__(self, titulo, conteudo, id=0, data=None):
         self.titulo = titulo
         self.conteudo = conteudo
-        self.data = datetime.datetime.now()
+        if data:
+            self.data = data
+        else:
+            self.data = datetime.datetime.now()
         self.id = id
