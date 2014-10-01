@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+import psycopg2
 from Post import Post
 
 
@@ -13,9 +14,10 @@ class PostgresPostDao(object):
 
     def insert(self, post):
         if isinstance(post, Post):
+            binary = psycopg2.Binary(post.imagem_binary)
             self.query.execute(
-                "INSERT INTO post (titulo, conteudo, data) VALUES (%s, %s, %s)",
-                (post.titulo, post.conteudo, post.data)
+                "INSERT INTO post (titulo, conteudo, data, imagem) VALUES (%s, %s, %s, %s)",
+                (post.titulo, post.conteudo, post.data, binary)
             )
             self.conn.commit()
             self.query.execute("SELECT MAX(id) FROM post")
@@ -27,9 +29,10 @@ class PostgresPostDao(object):
 
     def update(self, post):
         if isinstance(post, Post):
+            binary = psycopg2.Binary(post.imagem_binary)
             self.query.execute(
-                "UPDATE post SET titulo=%s, conteudo=%s WHERE id=%s",
-                (post.titulo, post.conteudo, post.id)
+                "UPDATE post SET titulo=%s, conteudo=%s, imagem=%s WHERE id=%s",
+                (post.titulo, post.conteudo, binary, post.id)
             )
             consult = self.query.rowcount
             if consult:
@@ -43,7 +46,7 @@ class PostgresPostDao(object):
         self.query.execute("SELECT * FROM post")
         postsQuery = self.query.fetchall()
         for post in postsQuery:
-            posts.append(Post(post[0], id=post[1]))
+            posts.append(Post(post[3], post[2], data=post[1], imagem_binary=post[4], id=post[0]))
         return posts
 
     def get_um(self, id):
@@ -53,7 +56,7 @@ class PostgresPostDao(object):
         )   
         consult = self.query.fetchone()
         if consult:
-            post = Post(consult[1], consult[2], id=consult[0], data=consult[3])
+            post = Post(consult[3], consult[2], imagem_binary=consult[4], data=consult[1], id=consult[0])
             return post
         return False
 
