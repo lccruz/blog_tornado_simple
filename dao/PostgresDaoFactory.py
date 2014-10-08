@@ -5,6 +5,7 @@ import psycopg2
 from PostgresTagDao import PostgresTagDao
 from PostgresUserDao import PostgresUserDao
 from PostgresPostDao import PostgresPostDao
+from PostgresPostTagDao import PostgresPostTagDao
 
 
 class PostgresDaoFactory(object):
@@ -37,3 +38,6 @@ class PostgresDaoFactory(object):
 
     def getTagDao(self):
         return PostgresTagDao(self.conn, self.cur)
+    
+    def getPostTagDao(self):
+        return PostgresPostTagDao(self.conn, self.cur)
