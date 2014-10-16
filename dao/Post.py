@@ -7,7 +7,7 @@ class Post(object):
     """
        Classe Post
     """
-    def __init__(self, titulo, conteudo, id=0, data=None, imagem_binary=''):
+    def __init__(self, titulo, conteudo, id=0, data=None, imagem_binary='', arquivopath=''):
         self.titulo = titulo
         self.conteudo = conteudo
         if data:
@@ -16,3 +16,4 @@ class Post(object):
             self.data = datetime.datetime.now()
         self.id = id
         self.imagem_binary = imagem_binary
+        self.arquivopath = arquivopath

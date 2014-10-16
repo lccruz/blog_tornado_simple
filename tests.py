@@ -2,6 +2,7 @@
 
 import unittest
 from utils import convert_md5
+from utils import save_arquivo
 from settings import FACTORY
 from dao.Tag import Tag
 from dao.User import User
@@ -57,11 +58,14 @@ class TestTag(unittest.TestCase):
         # insert
         imagem = open('static/img/python.png','rb')
         imagem = imagem.read()
-        post= Post('Post1', 'Conteudo', imagem_binary = imagem)
+        arquivo = open('static/css/blog-post.css','r')
+        arquivopath = save_arquivo(arquivo.read(), 'post1.css')
+        post= Post('Post1', 'Conteudo', imagem_binary = imagem, arquivopath = arquivopath)
         new_post = self.dao_post.insert(post)
         self.assertEqual(post.titulo, new_post.titulo)
         self.assertEqual(post.conteudo, new_post.conteudo)
         self.assertEqual(len(post.imagem_binary), len(new_post.imagem_binary))
+        self.assertEqual(post.arquivopath, new_post.arquivopath)
         new_post = self.dao_post.insert('Post')
         self.assertFalse(new_post)
         # update
