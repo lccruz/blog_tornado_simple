@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Html baseado em http://bootsnipp.com/snippets/featured/complete-blog-layout">
+        <meta name="author" content="Luciano Camargo Cruz">
+
+        <title>Blog Luciano Camargo Cruz</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="{{ static_url("css/bootstrap.min.css")}}" rel="stylesheet">
+
+        <!-- Add custom CSS here -->
+        <link href="{{ static_url("css/blog-post.css")}}" rel="stylesheet">
+        <link href="{{ static_url("css/font-awesome.min.css")}}" rel="stylesheet">
+    </head> 
+<body>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                  <h1>{% block titulo %} Default {% end %}
+                   <span class="pull-right">
+                        <a href="{% block linkinsert %} # {% end %}" class="btn btn-lg btn-primary">
+                        <span class="glyphicon glyphicon-plus"></span> Criar nova</a>
+                    </span>   
+                  </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+                    <li><a href="/posts/"><i class="fa fa-file-o fa-fw"></i>Post</a></li>
+                    <li><a href="/tags/"><i class="fa fa-book fa-fw"></i>Tags</a></li>
+                </ul>
+            </div>
+
+        {% block content %}
+        {% end %}
+
+        </div>
+    </div>
+
+</body>
+</html>

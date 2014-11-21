@@ -12,11 +12,11 @@ from dao.Post import Post
 class TestTag(unittest.TestCase):
     def setUp(self):
         self.dao_tag = FACTORY.getTagDao()
-        self.dao_tag.delete_all()
+#        self.dao_tag.delete_all()
         self.dao_post = FACTORY.getPostDao()
-        self.assertTrue(self.dao_post.delete_all())
+#        self.assertTrue(self.dao_post.delete_all())
         self.dao_user = FACTORY.getUserDao()
-        self.assertTrue(self.dao_user.delete_all())
+#        self.assertTrue(self.dao_user.delete_all())
         self.dao_post_tag = FACTORY.getPostTagDao()
 
     def test_convert_md5(self):
@@ -50,9 +50,9 @@ class TestTag(unittest.TestCase):
         cont = self.dao_tag.get_all()
         self.assertEqual(2, len(cont))
         # delete um
-        self.assertTrue(self.dao_tag.delete_um(new_tag.id))
+#        self.assertTrue(self.dao_tag.delete_um(new_tag.id))
         # delete all
-        self.assertTrue(self.dao_tag.delete_all())
+#        self.assertTrue(self.dao_tag.delete_all())
 
     def test_post(self):
         # insert
@@ -84,9 +84,9 @@ class TestTag(unittest.TestCase):
         cont = self.dao_post.get_all()
         self.assertEqual(1, len(cont))
         # delete um
-        self.assertTrue(self.dao_post.delete_um(new_post.id))
+#        self.assertTrue(self.dao_post.delete_um(new_post.id))
         # delete all
-        self.assertTrue(self.dao_post.delete_all())
+#        self.assertTrue(self.dao_post.delete_all())
 
     def test_user(self):
         # insert
