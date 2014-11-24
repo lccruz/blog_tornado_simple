@@ -1,0 +1,23 @@
+{% extends admin_base.html %}
+
+    {% block titulo %} Tags {% end %}
+    {% block linkinsert %} /tagsinsert/  {% end %}
+
+    {% block content %}    
+        <div class="col-md-10 well">
+            <table>
+                <tr>
+                    <td>
+                        <span class="error">{{ message }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form action="/tags/" method="GET">
+                            <input type="submit" value="Voltar">
+                        </form>
+                    </td>
+                </tr>
+            </table>   
+        </div>
+    {% end %}

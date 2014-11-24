@@ -3,6 +3,7 @@
 import os.path
 
 from wtforms.fields import TextField
+from wtforms.fields import HiddenField
 from wtforms.validators import *
 from wtforms_tornado import Form
 
@@ -17,4 +18,5 @@ class BaseForm(Form):
     Form.__init__(self, formdata, obj=obj, prefix=prefix, **kwargs)
 
 class FormTag(BaseForm):
+    id = HiddenField('id',)
     nome = TextField(u'Nome da Tag', validators=[Required()])

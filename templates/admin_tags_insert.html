@@ -1,29 +1,53 @@
 {% extends admin_base.html %}
 
+    {% block titulo %} Tags {% end %}
+    {% block linkinsert %} /tagsinsert/  {% end %}
+
     {% block content %}    
         <div class="col-md-10 well">
-            <table>
-                 <form action="" method="post">
-                    {% raw xsrf_form_html() %}
-                    {% for field in form %}
+            {% if message %}
+                <table>
                     <tr>
-                        <th>{% raw field.label() %}</th>
-                        <td>{% raw field() %}</td>
-                        {% if field.errors %}
-                            {% for error in field.errors %}
-                                <td>
-                                    <span class="error">{{ error }}</span>
-                                </td>
-                            {% end %}
-                        {% end %}
-                    </tr>
-                    {% end %}
-                     <tr>
                         <td>
-                            <input type="submit" value="Salvar">
+                            <span class="error">{{ message }}</span>
                         </td>
                     </tr>
-                </form>
-            </table>   
+                    <tr>
+                        <td>
+                            <form action="/tags/" method="GET">
+                                <input type="submit" value="Voltar">
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            
+            {% else %}
+
+                <table>
+                     <form action="/tagsinsert/" method="post">
+                        {% raw xsrf_form_html() %}
+                        {% for field in form %}
+                        <tr>
+                            {% if field.type != "HiddenField" %}
+                                <th>{% raw field.label() %}</th>
+                                <td>{% raw field() %}</td>
+                                {% if field.errors %}
+                                    {% for error in field.errors %}
+                                        <td>
+                                            <span class="error">{{ error }}</span>
+                                        </td>
+                                    {% end %}
+                                {% end %}
+                            {% end %}
+                        </tr>
+                        {% end %}
+                         <tr>
+                            <td>
+                                <input type="submit" value="Salvar">
+                            </td>
+                        </tr>
+                    </form>
+                </table>   
+            {% end %}
         </div>
     {% end %}

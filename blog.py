@@ -12,6 +12,7 @@ from tornado.options import define, options
 from forms import FormTag
 from settings import FACTORY
 from dao.Tag import Tag
+from tag_controler import *
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -22,6 +23,8 @@ class Application(tornado.web.Application):
             (r"/", Blog),
             (r"/tags/", TagView),
             (r"/tagsinsert/", TagInsert),
+            (r"/tag_delete/(\w+)", TagDelete),
+            (r"/tag_edit/(.*)", TagEdit),
         ]
         settings = dict(
             cookie_secret="V3f23B2YRDxQIzpftlGTrLqbKsfEN6J1o0L8ulA",
@@ -34,34 +37,6 @@ class Application(tornado.web.Application):
         tornado.web.Application.__init__(self, handlers, **settings)
 
 
-class TagView(tornado.web.RequestHandler):
-
-    def initialize(self):
-        self.dao_tag = FACTORY.getTagDao()
-
-    def get(self):
-        tags = self.dao_tag.get_all()
-        self.render("admin_tags_view.html", tags=tags)
-
-
-class TagInsert(tornado.web.RequestHandler):
-
-    def initialize(self):
-        self.dao_tag = FACTORY.getTagDao()
-
-    def get(self):
-        form = FormTag()
-        self.render("admin_tags_insert.html", form=form)
-
-    def post(self):
-        form = FormTag(self)
-        if form.validate():
-            tag = Tag(form.nome.data)
-            self.dao_tag.insert(tag)
-            self.write("<h2>Salvo</h2>")
-        self.render("admin_tags_insert.html", form=form)
-
-        
 class Blog(tornado.web.RequestHandler):
     def get(self):
         form = FormTag()

@@ -1,0 +1,46 @@
+{% extends admin_base.html %}
+
+    {% block titulo %} Tags {% end %}
+    {% block linkinsert %} /tagsinsert/  {% end %}
+
+    {% block content %}    
+        <div class="col-md-10 well">
+            {% if message %}
+                <table>
+                    <tr>
+                        <td>
+                            <span class="error">{{ message }}</span>
+                        </td>
+                    </tr>
+                </table>
+            
+            {% end %}
+
+            <table>
+                 <form action="/tag_edit/" method="post">
+                    {% raw xsrf_form_html() %}
+                    {% for field in form %}
+                    <tr>
+                        {% if field.type != "HiddenField" %}
+                            <th>{% raw field.label() %}</th>
+                        {% end %}
+                        <td>{% raw field() %}</td>
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <td>
+                                    <span class="error">{{ error }}</span>
+                                </td>
+                            {% end %}
+                        {% end %}
+                    </tr>
+                    {% end %}
+                     <tr>
+                        <td>
+                            <input type="submit" value="Salvar">
+                        </td>
+                    </tr>
+                </form>
+            </table>   
+
+        </div>
+    {% end %}
