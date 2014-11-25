@@ -11,8 +11,8 @@ import tornado.httpserver
 from tornado.options import define, options
 from forms import FormTag
 from settings import FACTORY
-from dao.Tag import Tag
 from tag_controler import *
+from post_controler import *
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -25,6 +25,10 @@ class Application(tornado.web.Application):
             (r"/tagsinsert/", TagInsert),
             (r"/tag_delete/(\w+)", TagDelete),
             (r"/tag_edit/(.*)", TagEdit),
+            (r"/posts/", PostView),
+            (r"/postsinsert/", PostInsert),
+            (r"/post_delete/(\w+)", PostDelete),
+            (r"/post_edit/(.*)", PostEdit),
         ]
         settings = dict(
             cookie_secret="V3f23B2YRDxQIzpftlGTrLqbKsfEN6J1o0L8ulA",
