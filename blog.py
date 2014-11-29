@@ -36,7 +36,7 @@ class Application(tornado.web.Application):
             autoreload=True,
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
-            xsrf_cookies=True,
+            xsrf_cookies=False,
         )
         tornado.web.Application.__init__(self, handlers, **settings)
 

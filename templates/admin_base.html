@@ -6,13 +6,17 @@
         <meta name="author" content="Luciano Camargo Cruz">
 
         <title>Blog Luciano Camargo Cruz</title>
-
+        
+        {% block css %} {% end %}
         <!-- Bootstrap core CSS -->
         <link href="{{ static_url("css/bootstrap.min.css")}}" rel="stylesheet">
 
         <!-- Add custom CSS here -->
         <link href="{{ static_url("css/blog-post.css")}}" rel="stylesheet">
         <link href="{{ static_url("css/font-awesome.min.css")}}" rel="stylesheet">
+
+        {% block js %} {% end %}
+
     </head> 
 <body>
 

@@ -1,4 +1,5 @@
 {% extends admin_base.html %}
+    
 
     {% block titulo %} Posts {% end %}
     {% block linkinsert %} /postsinsert/  {% end %}
@@ -18,7 +19,6 @@
 
             <table>
                  <form action="/post_edit/" method="post">
-                    {% raw xsrf_form_html() %}
                     {% for field in form %}
                     <tr>
                         {% if field.type != "HiddenField" %}
@@ -34,7 +34,21 @@
                         {% end %}
                     </tr>
                     {% end %}
-                     <tr>
+                    {% if tags_atual %}
+                        <tr>
+                            <td>
+                                Tags selecionadas:
+                            </td>
+                        </tr>
+                        {% for tag_atual in tags_atual %}
+                            <tr>
+                                <td>
+                                    {{ tag_atual }}
+                                </td>
+                            </tr>
+                        {% end %}
+                    {% end %}
+                    <tr>
                         <td>
                             <input type="submit" value="Salvar">
                         </td>
@@ -43,4 +57,5 @@
             </table>   
 
         </div>
+
     {% end %}

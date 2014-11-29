@@ -5,10 +5,20 @@ import os.path
 from wtforms.fields import TextField
 from wtforms.fields import HiddenField
 from wtforms.fields import TextAreaField
+from wtforms.fields import SelectMultipleField
 from wtforms.validators import *
 from wtforms_tornado import Form
 
 from util import MultiValueDict
+from settings import FACTORY
+
+def monta_tags():
+    dao_tag = FACTORY.getTagDao()
+    tags = []
+    for tag in dao_tag.get_all():
+        tag = (str(tag.id), tag.nome)
+        tags.append(tag)
+    return tags
 
 class BaseForm(Form):
   def __init__(self, handler=None, obj=None, prefix='', formdata=None, **kwargs):
@@ -28,3 +38,4 @@ class FormPost(BaseForm):
     id = HiddenField('id',)
     titulo = TextField(u'Titulo', validators=[Required()])
     conteudo = TextAreaField(u'Conteudo', validators=[Required()])
+    tags = SelectMultipleField(u'Tags', choices= monta_tags())

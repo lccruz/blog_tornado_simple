@@ -6,6 +6,11 @@ from forms import FormPost
 from settings import FACTORY
 from dao.Post import Post
 
+def get_tags(post_id):
+    dao_post_tag = FACTORY.getPostTagDao()
+    tags = [i.nome for i in dao_post_tag.get_all_tags_post(post_id)]
+    return tags
+
 
 class PostView(tornado.web.RequestHandler):
 
@@ -21,6 +26,7 @@ class PostInsert(tornado.web.RequestHandler):
 
     def initialize(self):
         self.dao_post = FACTORY.getPostDao()
+        self.dao_post_tag = FACTORY.getPostTagDao()
 
     def get(self):
         form = FormPost()
@@ -36,6 +42,7 @@ class PostInsert(tornado.web.RequestHandler):
             )
             self.dao_post.insert(post_blog)
             message = 'Salvo'
+            self.dao_post_tag.insert(post_blog.id, form.tags.data)
         self.render("admin_posts_insert.html", form=form, message=message)
 
 
@@ -56,13 +63,14 @@ class PostEdit(tornado.web.RequestHandler):
 
     def initialize(self):
         self.dao_post = FACTORY.getPostDao()
+        self.dao_post_tag = FACTORY.getPostTagDao()
 
     def get(self, post_id):
         if post_id:
             post = self.dao_post.get_um(post_id)
             if post:
                 form = FormPost(obj=post)
-        self.render("admin_posts_edit.html", form=form, message='')
+        self.render("admin_posts_edit.html", form=form, message='', tags_atual = get_tags(post.id))
 
     def post(self, post_id):
         form = FormPost(self)
@@ -73,5 +81,9 @@ class PostEdit(tornado.web.RequestHandler):
             post_blog.conteudo = form.conteudo.data
             post_blog = self.dao_post.update(post_blog)
             message = 'Editado'
+            if form.tags.data:
+                for tag in self.dao_post_tag.get_all_tags_post(post_blog.id):
+                    self.dao_post_tag.delete_um(post_blog.id, tag.id)
+                self.dao_post_tag.insert(post_blog.id, form.tags.data)
             form = FormPost(obj=post_blog)
-        self.render("admin_posts_edit.html", form=form, message=message)
+        self.render("admin_posts_edit.html", form=form, message=message, tags_atual = get_tags(post_blog.id))
