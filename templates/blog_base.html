@@ -41,19 +41,14 @@
                             <a href="/"><i class="fa fa-home"></i>Home
                             </a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="/">
                                 <i class="fa fa-book"></i>Posts
                             </a>
                         </li>
                         <li>
-                            <a href="/contato/">
-                                <i class="fa fa-envelope"></i> Contact
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/sobre/">
-                                <i class="fa fa-user"></i> About
+                            <a href="/contato">
+                                <i class="fa fa-envelope"></i> Contato
                             </a>
                         </li>
                     </ul>
@@ -74,14 +69,16 @@
 
                 <div class="col-lg-4">
                     <div class="well">
-                        <h4><i class="fa fa-search"></i> Blog Search...</h4>
+                        <h4><i class="fa fa-search"></i> Busca...</h4>
                         <div class="input-group">
-                            <input type="text" class="form-control">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
+                            <form action="/busca/" method="GET">
+                                <input type="text" class="form-control" name="search">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </form>
                         </div>
                         <!-- /input-group -->
                     </div>

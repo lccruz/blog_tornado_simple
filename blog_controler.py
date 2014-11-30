@@ -75,8 +75,29 @@ class BlogViewTag(tornado.web.RequestHandler):
             "blog_tag.html",
             tags=self.tags,
             posts=[],
-            posts_only=posts_only,
+            posts_only=self.posts_only,
             tagnome="Error",
             total=0,
         )
 
+
+class Contato(tornado.web.RequestHandler):
+    def initialize(self):
+        self.dao_post = FACTORY.getPostDao()
+        self.dao_tag = FACTORY.getTagDao()
+
+    def get(self):
+        posts_only = self.dao_post.get_all()
+        self.render("blog_contato.html", tags=self.dao_tag.get_all(), posts_only=posts_only)
+
+
+class Busca(tornado.web.RequestHandler):
+    def initialize(self):
+        self.dao_post = FACTORY.getPostDao()
+        self.dao_tag = FACTORY.getTagDao()
+
+    def get(self):
+        dado  = self.get_argument('search')
+        posts_only = self.dao_post.get_all()
+        posts = self.dao_post.search(dado)
+        self.render("blog_busca.html", tags=self.dao_tag.get_all(), posts_only=posts_only, posts=posts)

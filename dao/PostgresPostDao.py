@@ -79,3 +79,13 @@ class PostgresPostDao(object):
         self.query.execute("DELETE FROM post;")
         self.conn.commit()
         return True
+
+    def search(self, term):
+        posts = []
+        term= term.replace('=', '==').replace('%', '=%').replace('_', '=_')
+        sql= "SELECT * FROM post WHERE titulo LIKE %(like)s ESCAPE '='"
+        self.query.execute(sql, dict(like = '%'+term+'%'))
+        postsQuery = self.query.fetchall()
+        for post in postsQuery:
+            posts.append(Post(post[3], post[2], data=post[1], imagem_binary=post[4], arquivopath=post[5], id=post[0]))
+        return posts

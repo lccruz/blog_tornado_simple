@@ -8,9 +8,6 @@ import tornado.websocket
 import os.path
 import tornado.httpserver
 
-from tornado.options import define, options
-from forms import FormTag
-from settings import FACTORY
 from tag_controler import TagView
 from tag_controler import TagInsert
 from tag_controler import TagDelete
@@ -21,6 +18,8 @@ from post_controler import PostDelete
 from post_controler import PostEdit
 from blog_controler import BlogView
 from blog_controler import BlogViewPost
+from blog_controler import Contato
+from blog_controler import Busca
 from blog_controler import BlogViewTag
 from login_controler import LoginHandler
 from login_controler import LogoutHandler
@@ -30,9 +29,11 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/", BlogView),
             (r"/login", LoginHandler),
+            (r"/tag/(.*)", BlogViewTag),
+            (r"/contato", Contato),
+            (r"/busca/", Busca),
             (r"/logout", LogoutHandler),
             (r"/post/(.*)", BlogViewPost),
-            (r"/tag/(.*)", BlogViewTag),
             (r"/tags/", TagView),
             (r"/tagsinsert/", TagInsert),
             (r"/tag_delete/(\w+)", TagDelete),

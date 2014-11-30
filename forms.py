@@ -1,14 +1,11 @@
 # -*- coding:utf-8 -*-
 
-import os.path
-
 from wtforms.fields import TextField
 from wtforms.fields import HiddenField
 from wtforms.fields import TextAreaField
 from wtforms.fields import SelectMultipleField
 from wtforms.fields import FileField
 from wtforms.validators import Required
-from wtforms.validators import ValidationError
 from wtforms_tornado import Form
 
 from util import MultiValueDict

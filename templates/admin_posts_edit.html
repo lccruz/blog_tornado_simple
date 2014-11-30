@@ -19,6 +19,7 @@
 
             <table>
                  <form action="/post_edit/" method="post" enctype="multipart/form-data">
+                    {% raw xsrf_form_html() %}
                     {% for field in form %}
                     <tr>
                         {% if field.type != "HiddenField" %}

@@ -1,0 +1,16 @@
+{% extends blog_base.html %}
+
+{% block content %}
+    {% if not posts %}
+        <h2>
+            Nenhuma ocorrência
+        </h2>
+    {% end %}
+    {% for post in posts %} 
+        <h2>
+            <a href="/post/{{ post.id }}">{{ post.titulo }}</a>
+        </h2>
+        <hr>
+        <br/>
+    {% end %}
+{% end %}
