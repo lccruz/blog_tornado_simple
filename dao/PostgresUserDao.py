@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from User import User
-
+from utils import convert_md5
 
 class PostgresUserDao(object):
     """ Class PostgresUserDao
@@ -57,6 +57,17 @@ class PostgresUserDao(object):
             return user
         return False
 
+    def check_user(self, email):
+        self.query.execute(
+            "SELECT * FROM usuario WHERE email=(%s)",
+            (email, )
+        )   
+        consult = self.query.fetchone()
+        if consult:
+            user = User(consult[1], consult[2], consult[3], id=consult[0])
+            return user
+        return False
+
     def delete_um(self, id):
         self.query.execute(
             "DELETE FROM usuario WHERE id=(%s)",
@@ -72,3 +83,14 @@ class PostgresUserDao(object):
         self.query.execute("DELETE FROM usuario;")
         self.conn.commit()
         return True
+
+    def check_permission(self, email, password):
+        self.query.execute(
+            "SELECT * FROM usuario WHERE email=(%s) and password=(%s)",
+            (email, convert_md5(password))
+        )
+        consult = self.query.fetchone()
+        if consult:
+            user = User(consult[1], consult[2], consult[3], id=consult[0])
+            return user
+        return False

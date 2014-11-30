@@ -11,23 +11,29 @@ import tornado.httpserver
 from tornado.options import define, options
 from forms import FormTag
 from settings import FACTORY
-from tag_controler import *
-from post_controler import *
+from tag_controler import TagView
+from tag_controler import TagInsert
+from tag_controler import TagDelete
+from tag_controler import TagEdit
+from post_controler import PostView
+from post_controler import PostInsert
+from post_controler import PostDelete
+from post_controler import PostEdit
 from blog_controler import BlogView
 from blog_controler import BlogViewPost
 from blog_controler import BlogViewTag
-
-define("port", default=8888, help="run on the given port", type=int)
-
+from login_controler import LoginHandler
+from login_controler import LogoutHandler
 
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", BlogView),
+            (r"/login", LoginHandler),
+            (r"/logout", LogoutHandler),
             (r"/post/(.*)", BlogViewPost),
             (r"/tag/(.*)", BlogViewTag),
             (r"/tags/", TagView),
-            (r"/admin/", PostView),
             (r"/tagsinsert/", TagInsert),
             (r"/tag_delete/(\w+)", TagDelete),
             (r"/tag_edit/(.*)", TagEdit),
@@ -42,7 +48,8 @@ class Application(tornado.web.Application):
             autoreload=True,
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
-            xsrf_cookies=False,
+            xsrf_cookies=True,
+            login_url="/login",
         )
         tornado.web.Application.__init__(self, handlers, **settings)
 

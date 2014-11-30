@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Html baseado em http://bootsnipp.com/snippets/featured/complete-blog-layout">
+        <meta name="author" content="Luciano Camargo Cruz">
+
+        <title>Blog Luciano Camargo Cruz</title>
+
+        {% block css %} {% end %}
+
+        <!-- Bootstrap core CSS -->
+        <link href="{{ static_url("css/bootstrap.min.css")}}" rel="stylesheet">
+
+        <!-- Add custom CSS here -->
+        <link href="{{ static_url("css/blog-post.css")}}" rel="stylesheet">
+        <link href="{{ static_url("css/font-awesome.min.css")}}" rel="stylesheet">
+
+        {% block js %} {% end %}
+
+    </head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <form class="form-horizontal" action='/login' method="POST">
+                    <input type="hidden" name="next" id="next" value="{{ next }}">
+                    <fieldset>
+                        <div id="legend">
+                            <legend class="">Login</legend>
+                        </div>
+                        {% if errormessage %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ errormessage }}
+                            </div>
+                        {% end %}
+                        <div class="control-group">
+                        <!-- Username -->
+                            <label class="control-label"  for="username">Email</label>
+                            <div class="controls">
+                                <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <!-- Password-->
+                            <label class="control-label" for="password">Password</label>
+                            <div class="controls">
+                                <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                </br>
+                                <button class="btn btn-success">Login</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                    {% module xsrf_form_html() %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -13,28 +13,32 @@ from utils import save_arquivo
 from utils import delete_arquivo
 from utils import rename_arquivo
 from dao.Post import Post
+from base_controler import BaseHandler
 
 
-class PostView(tornado.web.RequestHandler):
+class PostView(BaseHandler):
 
     def initialize(self):
         self.dao_post = FACTORY.getPostDao()
 
+    @tornado.web.authenticated
     def get(self):
         posts = self.dao_post.get_all()
         self.render("admin_posts_view.html", posts=posts)
 
 
-class PostInsert(tornado.web.RequestHandler):
+class PostInsert(BaseHandler):
 
     def initialize(self):
         self.dao_post = FACTORY.getPostDao()
         self.dao_post_tag = FACTORY.getPostTagDao()
 
+    @tornado.web.authenticated
     def get(self):
         form = FormPost()
         self.render("admin_posts_insert.html", form=form, message='')
-
+    
+    @tornado.web.authenticated
     def post(self):
         form = FormPost(self)
         message = ''
@@ -72,11 +76,12 @@ class PostInsert(tornado.web.RequestHandler):
         self.render("admin_posts_insert.html", form=form, message=message)
 
 
-class PostDelete(tornado.web.RequestHandler):
+class PostDelete(BaseHandler):
 
     def initialize(self):
         self.dao_post = FACTORY.getPostDao()
 
+    @tornado.web.authenticated
     def get(self, post_id):
         message = "Erro ao excluir"
         if post_id:
@@ -88,12 +93,13 @@ class PostDelete(tornado.web.RequestHandler):
         self.render("admin_posts_delete.html", message = message)
 
 
-class PostEdit(tornado.web.RequestHandler):
+class PostEdit(BaseHandler):
 
     def initialize(self):
         self.dao_post = FACTORY.getPostDao()
         self.dao_post_tag = FACTORY.getPostTagDao()
 
+    @tornado.web.authenticated
     def get(self, post_id):
         imagem = ''
         arquivo = ''
@@ -114,6 +120,7 @@ class PostEdit(tornado.web.RequestHandler):
             arquivo=arquivo,
         )
 
+    @tornado.web.authenticated
     def post(self, post_id):
         form = FormPost(self)
         message = 'Erro'
