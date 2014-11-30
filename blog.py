@@ -13,6 +13,9 @@ from forms import FormTag
 from settings import FACTORY
 from tag_controler import *
 from post_controler import *
+from blog_controler import BlogView
+from blog_controler import BlogViewPost
+from blog_controler import BlogViewTag
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -20,8 +23,11 @@ define("port", default=8888, help="run on the given port", type=int)
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
-            (r"/", Blog),
+            (r"/", BlogView),
+            (r"/post/(.*)", BlogViewPost),
+            (r"/tag/(.*)", BlogViewTag),
             (r"/tags/", TagView),
+            (r"/admin/", PostView),
             (r"/tagsinsert/", TagInsert),
             (r"/tag_delete/(\w+)", TagDelete),
             (r"/tag_edit/(.*)", TagEdit),
@@ -39,18 +45,6 @@ class Application(tornado.web.Application):
             xsrf_cookies=False,
         )
         tornado.web.Application.__init__(self, handlers, **settings)
-
-
-class Blog(tornado.web.RequestHandler):
-    def get(self):
-        form = FormTag()
-        self.render("index.html", form=form)
-
-    def post(self):
-        form = FormTag(self)
-        if form.validate():
-            self.write("<h2>OK</h2>")
-        self.render("index.html", form=form)
 
 
 def main():

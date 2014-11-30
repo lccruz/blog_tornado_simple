@@ -1,0 +1,16 @@
+ {% extends blog_base.html %}
+
+{% block content %}
+    <h1>
+        Posts referente a Tag: {{ tagnome }}
+    </h1>
+    {% for post in posts %}
+        <h2>
+            <a href="/post/{{ post.id }}">{{ post.titulo }}</a>
+        </h2>
+        <hr>
+    {% end %}
+    <h3>
+        Total de posts para a tag {{ tagnome }}: {{ total }}
+    </h3>
+{% end %}

@@ -6,7 +6,9 @@ from wtforms.fields import TextField
 from wtforms.fields import HiddenField
 from wtforms.fields import TextAreaField
 from wtforms.fields import SelectMultipleField
-from wtforms.validators import *
+from wtforms.fields import FileField
+from wtforms.validators import Required
+from wtforms.validators import ValidationError
 from wtforms_tornado import Form
 
 from util import MultiValueDict
@@ -38,4 +40,10 @@ class FormPost(BaseForm):
     id = HiddenField('id',)
     titulo = TextField(u'Titulo', validators=[Required()])
     conteudo = TextAreaField(u'Conteudo', validators=[Required()])
+    imagem = FileField(u'Imagem',)
+    arquivo = FileField(u'Arquivo',)
     tags = SelectMultipleField(u'Tags', choices= monta_tags())
+
+    def validate_imagem(form, extension):
+        if extension in ['.jpg']:
+            return True

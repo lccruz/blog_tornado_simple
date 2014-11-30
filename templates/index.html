@@ -1,62 +1,37 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
+ {% extends blog_base.html %}
 
-        <meta charset="utf-8">
-        <meta name="description" content="Html baseado em http://bootsnipp.com/snippets/featured/complete-blog-layout">
-        <meta name="author" content="Luciano Camargo Cruz">
-
-        <title>Blog Luciano Camargo Cruz</title>
-
-        <!-- Bootstrap core CSS -->
-        <link href="{{ static_url("css/bootstrap.min.css")}}" rel="stylesheet">
-
-        <!-- Add custom CSS here -->
-        <link href="{{ static_url("css/blog-post.css")}}" rel="stylesheet">
-        <link href="{{ static_url("css/font-awesome.min.css")}}" rel="stylesheet">
-    </head> 
-<body>
-
-<div class="container">
-    <div class="row">
-        <div class"col-md-12">
-            <a href="/">Início</a>
-        </div>
-        <br>
-    </div>
-	<div class="row">
-        <div class="col-md-3">
-            <div class="input-group">
-                <input class="form-control" id="system-search" name="q" placeholder="Buscar" required>
-            </div>
-        </div>
-		<div class="col-md-9">
-    	    <table>
-                 <form action="" method="post">
-                    {% raw xsrf_form_html() %}
-                    {% for field in form %}
-                    <tr>
-                        <th>{% raw field.label() %}</th>
-                        <td>{% raw field() %}</td>
-                        {% if field.errors %}
-                            {% for error in field.errors %}
-                                <td>
-                                    <span class="error">{{ error }}</span>
-                                </td>
-                            {% end %}
-                        {% end %}
-                    </tr>
-                    {% end %}
-                     <tr>
-                        <td>
-                            <input type="submit" value="Submit">
-                        </td>
-                    </tr>
-                </form>
-            </table>   
-        </div>
-	</div>
-</div>
-
-</body>
-</html>
+{% block content %}
+    {% for post,post_tags in posts %} 
+        <!-- the actual blog post: title/author/date/content -->
+        <h1>
+            <a href="/post/{{ post.id }}">{{ post.titulo }}</a>
+        </h1>
+        <hr>
+        <p>
+            <i class="fa fa-calendar"></i> {{ post.data }}
+        </p>
+        {% if post_tags %}
+            <p>
+                <i class="fa fa-tags"></i> Tags: 
+                {% for tag in post_tags %}
+                    <a href="">
+                        <span class="badge badge-info">
+                            {{ tag }}
+                        </span>
+                    </a> 
+                {% end %}
+            </p>
+        {% end %}
+        <p class="lead">
+            {{ post.titulo }}
+        </p>
+        <p>
+            {{ post.conteudo }}
+        </p>
+        <br/>
+    <!--
+    <hr>
+        <img src="http://placehold.it/900x300" class="img-responsive"/>
+    <hr>-->
+    {% end %}
+{% end %}

@@ -18,7 +18,7 @@
             {% end %}
 
             <table>
-                 <form action="/post_edit/" method="post">
+                 <form action="/post_edit/" method="post" enctype="multipart/form-data">
                     {% for field in form %}
                     <tr>
                         {% if field.type != "HiddenField" %}
@@ -36,9 +36,9 @@
                     {% end %}
                     {% if tags_atual %}
                         <tr>
-                            <td>
-                                Tags selecionadas:
-                            </td>
+                            <th>
+                                <label for="tags">Tags selecionadas:</label>
+                            </th>
                         </tr>
                         {% for tag_atual in tags_atual %}
                             <tr>
@@ -48,6 +48,28 @@
                             </tr>
                         {% end %}
                     {% end %}
+                    {% if imagem %}
+                        <tr>
+                            <th>
+                                <label>Imagem:</label>
+                            </th>
+                            <td>
+                                <img src="/static/upload/{{ imagem }}" class="img-responsive" style="max-width: 400px"/>
+                            </td>
+                        </tr>
+                    {% end %}
+                    {% if arquivo %}
+                        <tr>
+                            <th>
+                                <label>Arquivo:</label>
+                            </th>
+                            <td>
+                                <a href="/static/upload/{{ arquivo }}" target="_blank">{{ arquivo }}</a>
+                            </td>
+                        </tr>
+                    {% end %}
+
+ 
                     <tr>
                         <td>
                             <input type="submit" value="Salvar">

@@ -40,7 +40,7 @@ class PostgresTagDao(object):
 
     def get_all(self):
         tags = []
-        self.query.execute("SELECT * FROM tag")
+        self.query.execute("SELECT * FROM tag ORDER BY nome")
         tagsQuery = self.query.fetchall()
         for tag in tagsQuery:
             tags.append(Tag(tag[1], id=tag[0]))

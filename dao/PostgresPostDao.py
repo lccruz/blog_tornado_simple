@@ -44,7 +44,7 @@ class PostgresPostDao(object):
 
     def get_all(self):
         posts = []
-        self.query.execute("SELECT * FROM post")
+        self.query.execute("SELECT * FROM post ORDER BY data DESC")
         postsQuery = self.query.fetchall()
         for post in postsQuery:
             posts.append(Post(post[3], post[2], data=post[1], imagem_binary=post[4], arquivopath=post[5], id=post[0]))

@@ -24,7 +24,7 @@
             {% else %}
 
                 <table>
-                     <form action="/postsinsert/" method="post">
+                     <form action="/postsinsert/" method="post" enctype="multipart/form-data">
                         {% raw xsrf_form_html() %}
                         {% for field in form %}
                         <tr>

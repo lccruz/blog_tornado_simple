@@ -1,6 +1,14 @@
 # Copied from django with some modifications
 import copy
 
+from settings import FACTORY
+
+def get_tags(post_id):
+    dao_post_tag = FACTORY.getPostTagDao()
+    tags = [i.nome for i in dao_post_tag.get_all_tags_post(post_id)]
+    return tags
+
+
 class MultiValueDict(dict):
   """
   A subclass of dictionary customized to handle multiple values for the

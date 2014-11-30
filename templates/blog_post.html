@@ -1,0 +1,43 @@
+ {% extends blog_base.html %}
+
+{% block content %}
+    {% for post,post_tags in posts %} 
+        <!-- the actual blog post: title/author/date/content -->
+        <h1>
+            <a href="">{{ post.titulo }}</a>
+        </h1>
+        <hr>
+        <p>
+            <i class="fa fa-calendar"></i> {{ post.data }}
+        </p>
+        {% if post_tags %}
+            <p>
+                <i class="fa fa-tags"></i> Tags: 
+                {% for tag in post_tags %}
+                    <a href="">
+                        <span class="badge badge-info">
+                            {{ tag }}
+                        </span>
+                    </a> 
+                {% end %}
+            </p>
+        {% end %}
+        <p class="lead">
+            {{ post.titulo }}
+        </p>
+        <p>
+            {{ post.conteudo }}
+        </p>
+        {% if post.imagem_binary %}
+            <p>
+                <img src="/static/upload/{{ post.id }}.jpg" style="max-width: 400px"/>
+            </p>
+        {% end %}
+        {% if post.arquivopath %}
+            <p>
+                Arquivo:<a href="/static/upload/{{ post.arquivopath }}" target="_blank">{{ post.arquivopath }}</a>
+            </p>
+        {% end %}
+        <br/>
+    {% end %}
+{% end %}
