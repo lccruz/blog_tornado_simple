@@ -64,7 +64,7 @@ class PostInsert(BaseHandler):
                 arquivo_filename = arquivo['filename']
                 save_arquivo(arquivo['body'], arquivo_filename)
             post_blog = Post(
-                form.titulo.data,
+                form.titulo.data.lower(),
                 form.conteudo.data,
                 imagem_binary = imagem_binary,
                 arquivopath = arquivo_filename,
@@ -147,7 +147,7 @@ class PostEdit(BaseHandler):
                 arquivo_filename = arquivo['filename']
                 delete_arquivo(post_blog.arquivopath,False)
                 save_arquivo(arquivo['body'], arquivo_filename)
-            post_blog.titulo = form.titulo.data
+            post_blog.titulo = form.titulo.data.lower()
             post_blog.conteudo = form.conteudo.data
             if imagem_binary:
                 post_blog.imagem_binary = imagem_binary
